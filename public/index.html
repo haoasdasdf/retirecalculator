@@ -224,7 +224,7 @@
                 <div class="card">
                     <h3 id="lblSummaryContribution">💵 Monthly Contribution</h3>
                     <div class="value" id="summaryContribution">-</div>
-                    <div class="detail" id="lblSummaryContributionDetail">USD/Month</div>
+                    <div class="detail" ><span class="value" id="yearlyContribution" >-</span> <span id="lblSummaryContributionDetail">USD/Year</span></div>
                 </div>
                 <div class="card">
                     <h3 id="lblFinalBest">📈 Final Balance (Best)</h3>
@@ -354,6 +354,7 @@
             document.getElementById('summaryInitial').textContent = formatCurrency(data.input.initialDeposit);
             document.getElementById('summarySpending').textContent = formatCurrency(data.input.annualSpending);
             document.getElementById('summaryContribution').textContent = formatCurrency(data.input.monthlyContribution);
+            document.getElementById('yearlyContribution').textContent  = Number(document.getElementById('summaryContribution').textContent) * 12;
             
             // Calculate and display monthly spending
             const monthlySpending = data.input.annualSpending / 12;
