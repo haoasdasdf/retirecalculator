@@ -1,0 +1,13 @@
+{
+  "name": "retirement-simulator",
+  "version": "1.0.0",
+  "description": "FIRE Retirement Simulator with Multiple Scenarios",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "chart.js": "^4.4.1"
+  }
+}
