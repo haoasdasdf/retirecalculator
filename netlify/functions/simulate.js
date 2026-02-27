@@ -17,13 +17,15 @@ exports.handler = async (event, context) => {
     const translations = {
         en: {
             noticeTittle: "📌 Calculation Logic:",
-            noticeOne: "1. Beginning of year: Balance - Annual Spending",
-            noticeTwo: "2. End of year: Balance × (1 + Return Rate)",
+            noticeOne: "1. Beginning of year: Balance - Annual Spending (inflation-adjusted)",
+            noticeTwo: "2. Add annual contribution (Monthly Contribution × 12)",
+            noticeThree: "3. End of year: Balance × (1 + Return Rate)",
             title: "FIRE Retirement Simulator",
             initialDeposit: "Initial Deposit",
             monthlyContribution: "Monthly Contribution",
             annualSpending: "Annual Spending (%)",
             avgReturn: "Avg Annual Return (%)",
+            inflationRate: "Inflation Rate (%)",
             years: "Simulation Years",
             runBtn: "🚀 Run Simulation",
             summaryInitial: "Initial Deposit",
@@ -44,13 +46,15 @@ exports.handler = async (event, context) => {
         },
         ja: {
             noticeTittle: "📌 計算ロジック：",
-            noticeOne: "1. 年初：残高 - 年間支出",
-            noticeTwo: "2. 年末：残高 × (1 + 収益率)",
+            noticeOne: "1. 年初：残高 - 年間支出（インフレ調整後）",
+            noticeTwo: "2. 年間積立額を加算（月額投資額 × 12）",
+            noticeThree: "3. 年末：残高 × (1 + 収益率)",
             title: "FIRE 老後資金シミュレーター",
             initialDeposit: "初期投資額",
             monthlyContribution: "月額投資額",
             annualSpending: "年間支出 (%)",
             avgReturn: "平均年間収益率 (%)",
+            inflationRate: "インフレ率 (%)",
             years: "シミュレーション年数",
             runBtn: "🚀 シミュレーション開始",
             summaryInitial: "初期投資額",
@@ -71,13 +75,15 @@ exports.handler = async (event, context) => {
         },
         zh: {
             noticeTittle: "📌 计算逻辑：",
-            noticeOne: "1. 年初：余额 - 年度支出",
-            noticeTwo: "2. 年末：余额 × (1 + 回报率)",
+            noticeOne: "1. 年初：余额 - 年度支出（按通胀调整）",
+            noticeTwo: "2. 加上年度投入（每月投资额 × 12）",
+            noticeThree: "3. 年末：余额 × (1 + 回报率)",
             title: "FIRE 退休模拟器",
             initialDeposit: "初始存款",
             monthlyContribution: "每月投资额",
             annualSpending: "年支出 (%)",
             avgReturn: "平均年利率 (%)",
+            inflationRate: "通货膨胀率 (%)",
             years: "模拟年数",
             runBtn: "🚀 运行模拟",
             summaryInitial: "初始存款",
@@ -98,13 +104,15 @@ exports.handler = async (event, context) => {
         },
         ko: {
             noticeTittle: "📌 계산 방식：",
-            noticeOne: "1. 연초：잔액 - 연간 지출액",
-            noticeTwo: "2. 연말：잔액 × (1 + 수익률)",
+            noticeOne: "1. 연초: 잔액 - 연간 지출액(인플레이션 반영)",
+            noticeTwo: "2. 연간 납입액 추가(월 투자액 × 12)",
+            noticeThree: "3. 연말: 잔액 × (1 + 수익률)",
             title: "FIRE 은퇴 시뮬레이터",
             initialDeposit: "초기 예금",
             monthlyContribution: "월 투자액",
             annualSpending: "연간 지출 (%)",
             avgReturn: "평균 연간 수익률 (%)",
+            inflationRate: "인플레이션율 (%)",
             years: "시뮬레이션 기간",
             runBtn: "🚀 시뮬레이션 실행",
             summaryInitial: "초기 예금",
@@ -125,13 +133,15 @@ exports.handler = async (event, context) => {
         },
         th: {
             noticeTittle: "📌 หลักการคำนวณ：",
-            noticeOne: "1. ต้นปี：ยอดคงเหลือ - รายจ่ายประจำปี",
-            noticeTwo: "2. สิ้นปี：ยอดคงเหลือ × (1 + อัตราผลตอบแทน)",
+            noticeOne: "1. ต้นปี: ยอดคงเหลือ - รายจ่ายรายปี (ปรับตามเงินเฟ้อ)",
+            noticeTwo: "2. เพิ่มเงินลงทุนรายปี (เงินลงทุนรายเดือน × 12)",
+            noticeThree: "3. สิ้นปี: ยอดคงเหลือ × (1 + อัตราผลตอบแทน)",
             title: "เครื่องมือคำนวณเกษียณ FIRE",
             initialDeposit: "เงินลงทุนเริ่มต้น",
             monthlyContribution: "เงินลงทุนรายเดือน",
             annualSpending: "ค่าใช้จ่ายรายปี (%)",
             avgReturn: "อัตราผลตอบแทนเฉลี่ยต่อปี (%)",
+            inflationRate: "อัตราเงินเฟ้อ (%)",
             years: "จำนวนปีที่จำลอง",
             runBtn: "🚀 เริ่มการจำลอง",
             summaryInitial: "เงินลงทุนเริ่มต้น",
@@ -152,13 +162,15 @@ exports.handler = async (event, context) => {
         },
         vi: {
             noticeTittle: "📌 Công thức tính toán：",
-            noticeOne: "1. Đầu năm：Số dư - Chi tiêu hàng năm",
-            noticeTwo: "2. Cuối năm：Số dư × (1 + Tỷ lệ hoàn trả)",
+            noticeOne: "1. Đầu năm: Số dư - Chi tiêu năm (điều chỉnh theo lạm phát)",
+            noticeTwo: "2. Cộng khoản đầu tư năm (Đầu tư tháng × 12)",
+            noticeThree: "3. Cuối năm: Số dư × (1 + Tỷ suất lợi nhuận)",
             title: "Công cụ Tính Toán Hưu trí FIRE",
             initialDeposit: "Tiền gửi ban đầu",
             monthlyContribution: "Đầu tư hàng tháng",
             annualSpending: "Chi tiêu hàng năm (%)",
             avgReturn: "Lợi nhuận trung bình năm (%)",
+            inflationRate: "Tỷ lệ lạm phát (%)",
             years: "Số năm mô phỏng",
             runBtn: "🚀 Chạy Mô phỏng",
             summaryInitial: "Tiền gửi ban đầu",
@@ -190,10 +202,11 @@ exports.handler = async (event, context) => {
         return returnRate / 100;
     }
 
-    function generateScenarios(initialDeposit, monthlyContribution, annualSpendingPercent, avgReturn, years) {
+    function generateScenarios(initialDeposit, monthlyContribution, annualSpendingPercent, avgReturn, inflationRate, years) {
         const annualSpending = initialDeposit * (annualSpendingPercent / 100);
         const monthlySpending = annualSpending / 12;
         const annualContribution = monthlyContribution * 12;
+        const inflationFactor = 1 + (inflationRate / 100);
         const stdDev = Math.abs(avgReturn) * 0.5;
         
         const scenarios = {
@@ -212,7 +225,8 @@ exports.handler = async (event, context) => {
             const yearlyData = [];
             
             for (let year = 0; year < returns.length; year++) {
-                balance -= annualSpending;
+                const spendingThisYear = annualSpending * Math.pow(inflationFactor, year);
+                balance -= spendingThisYear;
                 balance += annualContribution;
                 
                 if (balance < 0) {
@@ -220,15 +234,16 @@ exports.handler = async (event, context) => {
                         year: year + 1,
                         returnRate: (returns[year] * 100).toFixed(2),
                         balance: 0,
-                        spending: annualSpending,
+                        spending: spendingThisYear,
                         depleted: true
                     });
                     for (let remaining = year + 1; remaining < returns.length; remaining++) {
+                        const futureSpending = annualSpending * Math.pow(inflationFactor, remaining);
                         yearlyData.push({
                             year: remaining + 1,
                             returnRate: 0,
                             balance: 0,
-                            spending: annualSpending
+                            spending: futureSpending
                         });
                     }
                     break;
@@ -240,7 +255,7 @@ exports.handler = async (event, context) => {
                     year: year + 1,
                     returnRate: (returns[year] * 100).toFixed(2),
                     balance: Math.max(0, balance),
-                    spending: annualSpending,
+                    spending: spendingThisYear,
                     depleted: false
                 });
             }
@@ -254,7 +269,7 @@ exports.handler = async (event, context) => {
         scenarios.average = calculateBalance(avgReturns);
         
         return {
-            input: { initialDeposit, monthlyContribution, annualContribution, annualSpendingPercent, annualSpending, monthlySpending, avgReturn, years },
+            input: { initialDeposit, monthlyContribution, annualContribution, annualSpendingPercent, annualSpending, monthlySpending, avgReturn, inflationRate, years },
             scenarios
         };
     }
@@ -269,7 +284,7 @@ exports.handler = async (event, context) => {
     if (event.path && (event.path.includes('/simulate') || event.path.endsWith('/simulate'))) {
         try {
             const body = event.body ? JSON.parse(event.body) : {};
-            const { initialDeposit, monthlyContribution, spendingPercent, avgReturn, years } = body;
+            const { initialDeposit, monthlyContribution, spendingPercent, avgReturn, inflationRate, years } = body;
 
             const parsedInitialDeposit = parseFloat(initialDeposit);
             const parsedMonthlyContribution =
@@ -278,6 +293,10 @@ exports.handler = async (event, context) => {
                     : parseFloat(monthlyContribution);
             const parsedSpendingPercent = parseFloat(spendingPercent);
             const parsedAvgReturn = parseFloat(avgReturn);
+            const parsedInflationRate =
+                inflationRate === undefined || inflationRate === null || inflationRate === ''
+                    ? 0
+                    : parseFloat(inflationRate);
             const parsedYears = parseInt(years);
 
             if (
@@ -285,6 +304,7 @@ exports.handler = async (event, context) => {
                 Number.isNaN(parsedMonthlyContribution) ||
                 Number.isNaN(parsedSpendingPercent) ||
                 Number.isNaN(parsedAvgReturn) ||
+                Number.isNaN(parsedInflationRate) ||
                 Number.isNaN(parsedYears)
             ) {
                 return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid numeric input' }) };
@@ -299,6 +319,7 @@ exports.handler = async (event, context) => {
                 parsedMonthlyContribution,
                 parsedSpendingPercent,
                 parsedAvgReturn,
+                parsedInflationRate,
                 parsedYears
             );
             

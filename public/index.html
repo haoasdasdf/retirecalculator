@@ -195,6 +195,10 @@
                     <input type="number" id="avgReturn" value="7" min="-10" max="30" step="0.1">
                 </div>
                 <div class="input-group">
+                    <label id="lblInflationRate">Inflation Rate (%)</label>
+                    <input type="number" id="inflationRate" value="2" min="0" max="20" step="0.1">
+                </div>
+                <div class="input-group">
                     <label id="lblYears">Simulation Years</label>
                     <input type="number" id="years" value="10" min="1" max="50">
                 </div>
@@ -202,8 +206,9 @@
             
             <div class="logic-note" id="logicNote">
                 <div id="noticeTittle">📌 Calculation Logic:</div>
-                <div id="noticeOne">1. Beginning of year: Balance - Annual Spending</div>
-                <div id="noticeTwo">2. End of year: Balance × (1 + Return Rate)</div>
+                <div id="noticeOne">1. Beginning of year: Balance - Annual Spending (inflation-adjusted)</div>
+                <div id="noticeTwo">2. Add annual contribution (Monthly Contribution × 12)</div>
+                <div id="noticeThree">3. End of year: Balance × (1 + Return Rate)</div>
             </div>
             
             <button class="btn" id="runBtn" onclick="runSimulation()">🚀 Run Simulation</button>
@@ -290,11 +295,13 @@
             document.getElementById('noticeTittle').textContent = t.noticeTittle;
             document.getElementById('noticeOne').textContent = t.noticeOne;
             document.getElementById('noticeTwo').textContent = t.noticeTwo;
+            document.getElementById('noticeThree').textContent = t.noticeThree || '3. End of year: Balance × (1 + Return Rate)';
             document.getElementById('pageTitle').textContent = '🎯 ' + t.title;
             document.getElementById('lblInitialDeposit').textContent = t.initialDeposit + ' (' + t.unit + ')';
             document.getElementById('lblMonthlyContribution').textContent = t.monthlyContribution + ' (' + t.unit + ')';
             document.getElementById('lblSpendingPercent').textContent = t.annualSpending;
             document.getElementById('lblAvgReturn').textContent = t.avgReturn;
+            document.getElementById('lblInflationRate').textContent = t.inflationRate || 'Inflation Rate (%)';
             document.getElementById('lblYears').textContent = t.years;
             document.getElementById('runBtn').textContent = t.runBtn;
             document.getElementById('lblSummaryInitial').textContent = '💰 ' + t.summaryInitial;
@@ -321,6 +328,7 @@
             const monthlyContribution = document.getElementById('monthlyContribution').value;
             const spendingPercent = document.getElementById('spendingPercent').value;
             const avgReturn = document.getElementById('avgReturn').value;
+            const inflationRate = document.getElementById('inflationRate').value;
             const years = document.getElementById('years').value;
             
             try {
@@ -332,6 +340,7 @@
                         monthlyContribution: monthlyContribution * 10000,
                         spendingPercent: parseFloat(spendingPercent),
                         avgReturn: parseFloat(avgReturn),
+                        inflationRate: parseFloat(inflationRate),
                         years: parseInt(years)
                     })
                 });
