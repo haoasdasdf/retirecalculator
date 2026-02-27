@@ -191,6 +191,7 @@ function getRandomReturn(avg, stdDev) {
 function generateScenarios(initialDeposit, monthlyContribution, annualSpendingPercent, avgReturn, years) {
     const annualSpending = initialDeposit * (annualSpendingPercent / 100);
     const monthlySpending = annualSpending / 12;
+    const annualContribution = monthlyContribution * 12;
     const stdDev = Math.abs(avgReturn) * 0.5;
     
     const scenarios = {
@@ -211,6 +212,9 @@ function generateScenarios(initialDeposit, monthlyContribution, annualSpendingPe
         for (let year = 0; year < returns.length; year++) {
             // Step 1: Subtract annual spending at beginning of year
             balance -= annualSpending;
+
+            // Step 1.5: Add annual contribution before applying return
+            balance += annualContribution;
             
             if (balance < 0) {
                 yearlyData.push({
@@ -257,6 +261,7 @@ function generateScenarios(initialDeposit, monthlyContribution, annualSpendingPe
         input: {
             initialDeposit,
             monthlyContribution,
+            annualContribution,
             annualSpendingPercent,
             annualSpending,
             monthlySpending,
@@ -269,17 +274,36 @@ function generateScenarios(initialDeposit, monthlyContribution, annualSpendingPe
 
 app.post('/api/simulate', (req, res) => {
     const { initialDeposit, monthlyContribution, spendingPercent, avgReturn, years } = req.body;
-    
-    if (!initialDeposit || !spendingPercent || !avgReturn || !years) {
-        return res.status(400).json({ error: 'All fields are required' });
+
+    const parsedInitialDeposit = parseFloat(initialDeposit);
+    const parsedMonthlyContribution =
+        monthlyContribution === undefined || monthlyContribution === null || monthlyContribution === ''
+            ? 0
+            : parseFloat(monthlyContribution);
+    const parsedSpendingPercent = parseFloat(spendingPercent);
+    const parsedAvgReturn = parseFloat(avgReturn);
+    const parsedYears = parseInt(years);
+
+    if (
+        Number.isNaN(parsedInitialDeposit) ||
+        Number.isNaN(parsedMonthlyContribution) ||
+        Number.isNaN(parsedSpendingPercent) ||
+        Number.isNaN(parsedAvgReturn) ||
+        Number.isNaN(parsedYears)
+    ) {
+        return res.status(400).json({ error: 'Invalid numeric input' });
     }
-    
+
+    if (parsedYears < 1) {
+        return res.status(400).json({ error: 'Years must be at least 1' });
+    }
+
     const result = generateScenarios(
-        parseFloat(initialDeposit),
-        monthlyContribution ? parseFloat(monthlyContribution) : 0,
-        parseFloat(spendingPercent),
-        parseFloat(avgReturn),
-        parseInt(years)
+        parsedInitialDeposit,
+        parsedMonthlyContribution,
+        parsedSpendingPercent,
+        parsedAvgReturn,
+        parsedYears
     );
     
     res.json(result);
